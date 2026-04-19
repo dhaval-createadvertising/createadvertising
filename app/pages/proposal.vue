@@ -13,6 +13,9 @@ const isDark = useDark({
 })
 const toggleDark = useToggle(isDark)
 
+const { width } = useWindowSize()
+const isMobile = computed(() => width.value < 1024)
+
 const currentSlide = ref(0)
 const totalSlides = 9
 const transitioning = ref(false)
@@ -50,7 +53,7 @@ const slideLabels = [
 <template>
   <div class="deck">
     <!-- ─── Progress Bar ─── -->
-    <div class="progress-track">
+    <div v-if="!isMobile" class="progress-track">
       <div class="progress-fill" :style="{ width: ((currentSlide + 1) / totalSlides) * 100 + '%' }"></div>
     </div>
 
@@ -70,11 +73,11 @@ const slideLabels = [
     </nav>
 
     <!-- ─── Slide Container ─── -->
-    <div class="slide-viewport">
-      <Transition :name="direction === 'next' ? 'slide-left' : 'slide-right'" mode="out-in">
+    <div class="slide-viewport" :class="{ 'mobile-flow': isMobile }">
+      <TransitionGroup :name="isMobile ? '' : (direction === 'next' ? 'slide-left' : 'slide-right')">
 
         <!-- ═══════════════ SLIDE 0: TITLE ═══════════════ -->
-        <div v-if="currentSlide === 0" key="s0" class="slide">
+        <div v-show="isMobile || currentSlide === 0" key="s0" class="slide">
           <div class="slide-inner title-slide">
             <div class="title-glow"></div>
             <div class="title-badge">Technical Proposal</div>
@@ -94,7 +97,7 @@ const slideLabels = [
                 Production Ready
               </div>
             </div>
-            <button class="start-btn" @click="next">
+            <button v-if="!isMobile" class="start-btn" @click="next">
               View Proposal
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
@@ -102,7 +105,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 1: OVERVIEW ═══════════════ -->
-        <div v-else-if="currentSlide === 1" key="s1" class="slide">
+        <div v-show="isMobile || currentSlide === 1" key="s1" class="slide">
           <div class="slide-inner">
             <div class="slide-label">01 — Overview</div>
             <h2>What We're Building</h2>
@@ -137,7 +140,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 2: ARCHITECTURE ═══════════════ -->
-        <div v-else-if="currentSlide === 2" key="s2" class="slide">
+        <div v-show="isMobile || currentSlide === 2" key="s2" class="slide">
           <div class="slide-inner">
             <div class="slide-label">02 — Architecture</div>
             <h2>Two Infrastructure Options</h2>
@@ -191,7 +194,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 3: SECURITY ═══════════════ -->
-        <div v-else-if="currentSlide === 3" key="s3" class="slide">
+        <div v-show="isMobile || currentSlide === 3" key="s3" class="slide">
           <div class="slide-inner">
             <div class="slide-label">03 — Security</div>
             <h2>Enterprise-Grade Security</h2>
@@ -220,7 +223,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 4: FEATURES ═══════════════ -->
-        <div v-else-if="currentSlide === 4" key="s4" class="slide">
+        <div v-show="isMobile || currentSlide === 4" key="s4" class="slide">
           <div class="slide-inner">
             <div class="slide-label">04 — Key Functionalities</div>
             <h2>What's Included</h2>
@@ -267,7 +270,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 5: OPTION 1 COST ═══════════════ -->
-        <div v-else-if="currentSlide === 5" key="s5" class="slide">
+        <div v-show="isMobile || currentSlide === 5" key="s5" class="slide">
           <div class="slide-inner">
             <div class="slide-label">05 — Option 1 Investment <span class="reco-badge">★ Recommended</span></div>
             <h2>Google Cloud + Firebase</h2>
@@ -313,7 +316,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 6: OPTION 2 COST ═══════════════ -->
-        <div v-else-if="currentSlide === 6" key="s6" class="slide">
+        <div v-show="isMobile || currentSlide === 6" key="s6" class="slide">
           <div class="slide-inner">
             <div class="slide-label">06 — Option 2 Investment</div>
             <h2>Netlify + Supabase Enterprise</h2>
@@ -359,7 +362,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 7: TCO COMPARISON ═══════════════ -->
-        <div v-else-if="currentSlide === 7" key="s7" class="slide">
+        <div v-show="isMobile || currentSlide === 7" key="s7" class="slide">
           <div class="slide-inner">
             <div class="slide-label">07 — Total Cost of Ownership</div>
             <h2>12 & 24 Month Comparison</h2>
@@ -439,7 +442,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 8: SUPPORT ═══════════════ -->
-        <div v-else-if="currentSlide === 8" key="s8" class="slide">
+        <div v-show="isMobile || currentSlide === 8" key="s8" class="slide">
           <div class="slide-inner">
             <div class="slide-label">08 — Ongoing Support</div>
             <h2>What's Included Monthly</h2>
@@ -475,11 +478,11 @@ const slideLabels = [
           </div>
         </div>
 
-      </Transition>
+      </TransitionGroup>
     </div>
 
     <!-- ─── Navigation Controls ─── -->
-    <div class="deck-controls">
+    <div v-if="!isMobile" class="deck-controls">
       <button class="ctrl-btn" :disabled="currentSlide === 0" @click="prev">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
@@ -550,7 +553,13 @@ const slideLabels = [
 }
 
 [data-theme="light"] .deck {
-  background: #f1f5f9; /* Slightly different to contrast with secondary bg */
+  background: #f1f5f9;
+}
+
+.deck:has(.mobile-flow) {
+  height: auto;
+  overflow: visible;
+  display: block;
 }
 
 /* ── Progress Bar ──────────────────────────────────────────── */
@@ -580,6 +589,8 @@ const slideLabels = [
   backdrop-filter: blur(10px);
   z-index: 50;
   border-bottom: 1px solid var(--border-primary);
+  position: sticky;
+  top: 0;
 }
 .deck-logo { height: 22px; opacity: 0.7; filter: var(--logo-filter); }
 [data-theme="light"] .deck-logo { filter: invert(1) brightness(0.2); }
@@ -640,7 +651,26 @@ const slideLabels = [
   padding: 0 32px;
   min-height: 0;
   overflow-y: auto;
+  position: relative;
 }
+
+.slide-viewport.mobile-flow {
+  display: block;
+  overflow: visible;
+  padding: 20px 16px 80px;
+}
+
+.slide-viewport.mobile-flow .slide {
+  margin-bottom: 60px;
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 60px;
+}
+
+.slide-viewport.mobile-flow .slide:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
 .slide {
   width: 100%;
   max-width: 1040px;
@@ -658,6 +688,11 @@ const slideLabels = [
   align-items: center;
   justify-content: center;
   position: relative;
+  min-height: 70vh;
+}
+.mobile-flow .title-slide {
+  min-height: auto;
+  padding: 40px 0;
 }
 .title-glow {
   position: absolute;
