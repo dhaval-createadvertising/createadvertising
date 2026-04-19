@@ -75,10 +75,9 @@ const slideLabels = [
 
     <!-- ─── Slide Container ─── -->
     <div class="slide-viewport" :class="{ 'mobile-flow': isMobile }">
-      <TransitionGroup :name="isMobile ? '' : (direction === 'next' ? 'slide-left' : 'slide-right')">
-
+      <Transition v-if="!isMobile" :name="direction === 'next' ? 'slide-left' : 'slide-right'" mode="out-in">
         <!-- ═══════════════ SLIDE 0: TITLE ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 0" key="s0" class="slide">
+        <div v-if="currentSlide === 0" key="s0" class="slide" style="will-change: transform, opacity;">
           <div class="slide-inner title-slide">
             <div class="title-glow"></div>
             <div class="title-badge">Technical Proposal</div>
@@ -106,7 +105,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 1: OVERVIEW ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 1" key="s1" class="slide">
+        <div v-else-if="currentSlide === 1" key="s1" class="slide">
           <div class="slide-inner">
             <div class="slide-label">01 — Overview</div>
             <h2>What We're Building</h2>
@@ -141,7 +140,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 2: ARCHITECTURE ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 2" key="s2" class="slide">
+        <div v-else-if="currentSlide === 2" key="s2" class="slide">
           <div class="slide-inner">
             <div class="slide-label">02 — Architecture</div>
             <h2>Two Infrastructure Options</h2>
@@ -195,7 +194,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 3: SECURITY ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 3" key="s3" class="slide">
+        <div v-else-if="currentSlide === 3" key="s3" class="slide">
           <div class="slide-inner">
             <div class="slide-label">03 — Security</div>
             <h2>Enterprise-Grade Security</h2>
@@ -224,7 +223,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 4: FEATURES ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 4" key="s4" class="slide">
+        <div v-else-if="currentSlide === 4" key="s4" class="slide">
           <div class="slide-inner">
             <div class="slide-label">04 — Key Functionalities</div>
             <h2>What's Included</h2>
@@ -271,7 +270,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 5: OPTION 1 COST ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 5" key="s5" class="slide">
+        <div v-else-if="currentSlide === 5" key="s5" class="slide">
           <div class="slide-inner">
             <div class="slide-label">05 — Option 1 Investment <span class="reco-badge">★ Recommended</span></div>
             <h2>Google Cloud + Firebase</h2>
@@ -294,7 +293,7 @@ const slideLabels = [
                 </div>
               </div>
               <!-- Monthly -->
-              <div class="cost-card highlight-blue">
+              <div class="cost-card">
                 <div class="cc-tag green">Monthly</div>
                 <h3>Recurring Costs</h3>
                 <div class="cost-lines">
@@ -317,7 +316,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 6: OPTION 2 COST ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 6" key="s6" class="slide">
+        <div v-else-if="currentSlide === 6" key="s6" class="slide">
           <div class="slide-inner">
             <div class="slide-label">06 — Option 2 Investment</div>
             <h2>Netlify + Supabase Enterprise</h2>
@@ -363,7 +362,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 7: TCO COMPARISON ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 7" key="s7" class="slide">
+        <div v-else-if="currentSlide === 7" key="s7" class="slide">
           <div class="slide-inner">
             <div class="slide-label">07 — Total Cost of Ownership</div>
             <h2>12 & 24 Month Comparison</h2>
@@ -443,7 +442,7 @@ const slideLabels = [
         </div>
 
         <!-- ═══════════════ SLIDE 8: SUPPORT ═══════════════ -->
-        <div v-show="isMobile || currentSlide === 8" key="s8" class="slide">
+        <div v-else-if="currentSlide === 8" key="s8" class="slide">
           <div class="slide-inner">
             <div class="slide-label">08 — Ongoing Support</div>
             <h2>What's Included Monthly</h2>
@@ -479,7 +478,125 @@ const slideLabels = [
           </div>
         </div>
 
-      </TransitionGroup>
+      </Transition>
+
+      <!-- On Mobile: Simple Scrolling Flow (No Transitions to avoid lag) -->
+      <div v-else class="mobile-flow-inner">
+        <!-- Slide 0 -->
+        <div class="slide">
+          <div class="slide-inner title-slide">
+            <div class="title-glow"></div>
+            <div class="title-badge">Technical Proposal</div>
+            <h1>Production Tracking<br/><span class="gradient-text">Portal</span></h1>
+            <p class="title-sub">Enterprise-Grade Application for Create Advertising's Production & Localization Workflow Management</p>
+          </div>
+        </div>
+        <!-- Slide 1 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-label">01 — Overview</div>
+            <h2>What We're Building</h2>
+            <div class="card-grid four">
+              <div class="mini-card"><div class="mc-icon red">🔒</div><h3>100% Login-Gated</h3><p>Every view requires authenticated credentials.</p></div>
+              <div class="mini-card"><div class="mc-icon blue">👥</div><h3>Role-Based Views</h3><p>Internal, Distributor, and Admin portals.</p></div>
+              <div class="mini-card"><div class="mc-icon amber">📧</div><h3>Email Automations</h3><p>Notifications and collaboration triggers.</p></div>
+              <div class="mini-card"><div class="mc-icon teal">🌐</div><h3>Localization Engine</h3><p>Mobile-first vertical script view.</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-label">02 — Architecture</div>
+            <h2>Two Infrastructure Options</h2>
+            <div class="arch-compare mobile">
+              <div class="arch-col recommended">
+                <div class="arch-header opt1"><span class="arch-opt">Option 1 <span class="reco-badge">★ Recommended</span></span><h3>Google Cloud + Firebase</h3></div>
+                <div class="arch-flow">
+                  <div class="flow-box fb-shield">🛡️ Cloud Armor WAF</div>
+                  <div class="flow-row"><div class="flow-box fb-fire">🔥 Hosting</div><div class="flow-box fb-auth">🔐 Auth</div></div>
+                  <div class="flow-row"><div class="flow-box fb-db">🗄️ Cloud SQL</div><div class="flow-box fb-key">🔑 Secrets</div></div>
+                </div>
+              </div>
+              <div class="arch-col">
+                <div class="arch-header opt2"><span class="arch-opt">Option 2</span><h3>Netlify + Supabase</h3></div>
+                <div class="arch-flow">
+                  <div class="flow-box fb-netlify">◆ Netlify Enterprise</div>
+                  <div class="flow-row"><div class="flow-box fb-supa">⚡ Supabase</div><div class="flow-box fb-supa-auth">🔐 Auth</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-label">03 — Security</div>
+            <h2>Enterprise-Grade Security</h2>
+            <div class="sec-compare mobile">
+              <div class="sec-col recommended">
+                <h3 class="sec-title opt1-text">Option 1 — Google Cloud</h3>
+                <div class="sec-row"><div class="dot green"></div><div><strong>Cloud Armor WAF</strong></div></div>
+                <div class="sec-row"><div class="dot green"></div><div><strong>HSM Secret Manager</strong></div></div>
+                <div class="sec-row"><div class="dot green"></div><div><strong>Private VPC SQL</strong></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 4 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-label">04 — Functionalities</div>
+            <h2>What's Included</h2>
+            <div class="feature-grid mobile">
+              <div class="feat-card"><h3>Auth & Access</h3><ul><li>Email verification</li><li>Zero public content</li></ul></div>
+              <div class="feat-card"><h3>Role Portal</h3><ul><li>Internal & Distributor</li><li>Admin User Mgmt</li></ul></div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 5 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-label">05 — Option 1 Investment</div>
+            <h2>GCP + Firebase</h2>
+            <div class="cost-layout mobile">
+              <div class="cost-card"><h3>One-Time</h3><p class="big-price">$6,500</p></div>
+              <div class="cost-card highlight-blue"><h3>Monthly</h3><p class="big-price">$850/mo</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 7 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-label">07 — TCO</div>
+            <h2>Total Cost of Ownership</h2>
+            <div class="tco-table-wrap"><table class="tco-table">
+              <thead><tr><th></th><th>Opt 1 (GCP)</th><th>Opt 2 (Managed)</th></tr></thead>
+              <tbody>
+                <tr><td>Build</td><td>$6,500</td><td>$5,800</td></tr>
+                <tr><td>Monthly</td><td>$850/mo</td><td>$1,800/mo</td></tr>
+                <tr class="highlight-row"><td>12-Mo TCO</td><td>$16,700</td><td>$27,400</td></tr>
+                <tr class="highlight-row"><td>24-Mo TCO</td><td>$26,900</td><td>$49,000</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+        <!-- Slide 8 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-label">08 — Support</div>
+            <h2>Support & Maintenance</h2>
+            <div class="card-grid three">
+              <div class="support-stat"><h3>10 hrs/mo</h3><p>Dev Time</p></div>
+              <div class="support-stat"><h3>24-hr</h3><p>Email Support</p></div>
+            </div>
+            <div class="footer-note">
+              <img :src="'/logo.svg'" alt="CREATE" class="footer-logo" />
+              <p>Proposal valid for 30 days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ─── Navigation Controls ─── -->
@@ -1358,13 +1475,14 @@ tr:last-child .col-recommended {
 .slide-left-leave-active,
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s ease-out;
+  will-change: transform, opacity;
 }
 
-.slide-left-enter-from { opacity: 0; transform: translateX(60px); }
-.slide-left-leave-to { opacity: 0; transform: translateX(-60px); }
-.slide-right-enter-from { opacity: 0; transform: translateX(-60px); }
-.slide-right-leave-to { opacity: 0; transform: translateX(60px); }
+.slide-left-enter-from { opacity: 0; transform: translateX(30px); }
+.slide-left-leave-to { opacity: 0; transform: translateX(-30px); }
+.slide-right-enter-from { opacity: 0; transform: translateX(-30px); }
+.slide-right-leave-to { opacity: 0; transform: translateX(30px); }
 
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 640px) {
