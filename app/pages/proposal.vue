@@ -277,7 +277,7 @@ const slideLabels = [
             <h2>Google Cloud + Firebase</h2>
             <div class="cost-layout">
               <!-- One-time -->
-              <div class="cost-card highlight-blue">
+              <div class="cost-card">
                 <div class="cc-tag">One-Time</div>
                 <h3>Build & Deployment</h3>
                 <div class="cost-lines">
@@ -294,7 +294,7 @@ const slideLabels = [
                 </div>
               </div>
               <!-- Monthly -->
-              <div class="cost-card">
+              <div class="cost-card highlight-blue">
                 <div class="cc-tag green">Monthly</div>
                 <h3>Recurring Costs</h3>
                 <div class="cost-lines">
