@@ -60,7 +60,7 @@ const slideLabels = [
 
     <!-- ─── Top Bar ─── -->
     <nav class="deck-nav">
-      <img src="/logo.svg" alt="CREATE" class="deck-logo" />
+      <img :src="'/logo.svg'" alt="CREATE" class="deck-logo" />
       <div class="deck-nav-center">
         <div class="slide-counter">{{ currentSlide + 1 }} / {{ totalSlides }}</div>
       </div>
@@ -69,7 +69,7 @@ const slideLabels = [
           <svg v-if="isDark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <img src="kdp.png" alt="KDP" class="deck-logo-right" />
+        <img :src="'/kdp.png'" alt="KDP" class="deck-logo-right" />
       </div>
     </nav>
 
@@ -472,7 +472,7 @@ const slideLabels = [
               <p>Need more than 10 hours? Additional development time is available at <strong>$100/hour</strong>. Larger features will be scoped separately.</p>
             </div>
             <div class="footer-note">
-              <img src="/logo.svg" alt="CREATE" class="footer-logo" />
+              <img :src="'/logo.svg'" alt="CREATE" class="footer-logo" />
               <p>This proposal is valid for 30 days. Implementation timeline: 4–6 weeks from kickoff.</p>
               <p class="small">All prices in USD. Hosting accounts and usage charges belong to Create Advertising.</p>
             </div>
@@ -581,11 +581,11 @@ const slideLabels = [
 
 /* ── Top Nav ───────────────────────────────────────────────── */
 .deck-nav {
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
-  flex-shrink: 0;
+  padding: 0 24px;
   background: var(--nav-bg);
   backdrop-filter: blur(10px);
   z-index: 50;
@@ -635,8 +635,6 @@ const slideLabels = [
 }
 .deck-logo-right {
   height: 28px;
-  width: auto;
-  display: block;
   opacity: 0.85;
   border-radius: 4px;
   transition: opacity 0.3s;
@@ -660,7 +658,7 @@ const slideLabels = [
 .slide-viewport.mobile-flow {
   display: block;
   overflow: visible;
-  padding: 20px 16px 80px;
+  padding: 40px 24px 100px;
 }
 
 .slide-viewport.mobile-flow .slide {
@@ -807,8 +805,12 @@ const slideLabels = [
 
 /* ── Card Grids ────────────────────────────────────────────── */
 .card-grid { display: grid; gap: 14px; }
-.card-grid.four { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
-.card-grid.three { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card-grid.four { grid-template-columns: repeat(4, 1fr); }
+.card-grid.three { grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 1024px) {
+  .card-grid.four, .card-grid.three { grid-template-columns: 1fr; }
+}
 
 .mini-card {
   background: var(--bg-secondary);
@@ -998,8 +1000,18 @@ const slideLabels = [
 .feat-card li.optional::before { color: #a78bfa; }
 
 /* ── Cost Cards ────────────────────────────────────────────── */
-.cost-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-@media (max-width: 768px) { .cost-layout { grid-template-columns: 1fr; } }
+.cost-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 40px;
+}
+@media (max-width: 1024px) {
+  .cost-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
 
 .cost-card {
   background: var(--bg-primary);
