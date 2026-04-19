@@ -225,6 +225,9 @@ a:hover {
   .app-shell {
     padding-left: var(--sidebar-width);
   }
+  .app-shell.no-shell {
+    padding-left: 0;
+  }
 }
 
 .page-content {

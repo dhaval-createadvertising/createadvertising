@@ -1,18 +1,22 @@
 <template>
-  <div class="app-shell">
+  <div :class="['app-shell', { 'no-shell': isStandalonePage }]">
     <Transition name="splash">
-      <div v-if="showSplash" class="splash-screen">
+      <div v-if="showSplash && !isStandalonePage" class="splash-screen">
         <img src="/logo.svg" alt="CREATE" class="splash-logo" />
       </div>
     </Transition>
 
     <NuxtPage />
-    <BottomNav v-if="$route.path !== '/distributor-portal'" />
+    <BottomNav v-if="!isStandalonePage && $route.path !== '/distributor-portal'" />
   </div>
 </template>
 
 <script setup lang="ts">
+const route = useRoute()
 const showSplash = ref(true)
+
+const standalonePages = ['/proposal', '/login']
+const isStandalonePage = computed(() => standalonePages.includes(route.path))
 
 // Seed demo data on first load
 onMounted(() => {
